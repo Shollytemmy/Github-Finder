@@ -21,20 +21,24 @@ export const GithubProvider = ({children}) => {
 
    
 
-    const getAllUsers = async() => {
+    const searchUsers = async(text) => {
 
         setLoading()
 
         
+const params =  new URLSearchParams({
+    q: text
+})
+        
         
         try {
-            const response = await fetch(`${GITHUB_uRL}/users`)
+            const response = await fetch(`${GITHUB_uRL}/search/users?q=${text}`)
 
-            const data = await response.json()
+            const {items} = await response.json()
             if(response.status === 200){
                 dispatch({
                     type: "GET_USERS",
-                    payload: data
+                    payload: items
                 })
             }
         } catch (error) {
@@ -46,6 +50,12 @@ export const GithubProvider = ({children}) => {
     
     const setLoading = () => dispatch({type: "SET_LOADING"})
 
+    const clear = () => {
+        dispatch({
+            type: "CLEAR"
+        })
+    }
+
 
     
 
@@ -55,7 +65,8 @@ export const GithubProvider = ({children}) => {
 
         users: state.users,
         loading: state.loading,
-        getAllUsers,
+        searchUsers,
+        clear
 
     }}>
         {children}

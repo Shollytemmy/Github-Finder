@@ -1,5 +1,5 @@
 
-import React, { useEffect, useState, useContext } from 'react'
+import React, { useContext } from 'react'
 import GithubContext from '../../context/GitHub/GithubContext'
 import Spinner from '../Spinner'
 import UserItem from './UserItem'
@@ -7,18 +7,15 @@ import UserItem from './UserItem'
 
 function UserResults() {
   
-  const [hasError, setError] = useState(null)
-  const {users, loading, getAllUsers} = useContext(GithubContext)
+ 
+  const {users, loading} = useContext(GithubContext)
 
 
    
 
 
 
-    useEffect(() => {
-        getAllUsers()
-
-    }, [])
+    
 
 
     

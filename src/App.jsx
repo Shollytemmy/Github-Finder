@@ -3,6 +3,7 @@ import {BrowserRouter as Router, Routes, Route} from 'react-router-dom'
 import Footer from './components/Layouts/Footer'
 import Navbar from './components/Layouts/Navbar'
 import NotFound from './components/Layouts/NotFound'
+import { AlertProvider } from './context/Alert/AlertContext'
 import { GithubProvider } from './context/GitHub/GithubContext'
 import About from './Pages/About'
 import Home from './Pages/Home'
@@ -13,6 +14,7 @@ function App() {
 
   return (
     <GithubProvider>
+      <AlertProvider>
     <Router>
       <div className="flex flex-col justify-between h-screen">
         <Navbar />
@@ -33,6 +35,7 @@ function App() {
      
 
     </Router>
+    </AlertProvider>
     </GithubProvider>
   )
 }
