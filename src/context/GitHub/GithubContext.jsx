@@ -1,4 +1,5 @@
-import { createContext, useState } from "react";
+import { createContext, useReducer, useState } from "react";
+import githubReducer from "./githubReducer";
 
 const GITHUB_uRL = import.meta.env.VITE_GITHUB_URL
 const GITHUB_TOKEN = import.meta.env.VITE_GITHUB_TOKEN
@@ -9,24 +10,27 @@ const GithubContext = createContext()
 
 export const GithubProvider = ({children}) => {
 
-    const [users, setUsers] = useState([])
-    const [loading, setLoading] = useState(true)
+  
+    const initialState = {
+        users: [], 
+        loading: true
+    }
+
+    const [state, dispatch] = useReducer(githubReducer, initialState)
 
 
    
 
     const getAllUsers = async() => {
         try {
-            const response = await fetch(`${GITHUB_uRL}/users`, {
-                headers: {
-                    Authorization: `token ${GITHUB_TOKEN}`
-                }
-            })
+            const response = await fetch(`${GITHUB_uRL}/users`)
 
             const data = await response.json()
             if(response.status === 200){
-                setLoading(false)
-                setUsers(data)
+                dispatch({
+                    type: "GET_USERS",
+                    payload: data
+                })
             }
         } catch (error) {
             console.log(error)
@@ -35,8 +39,8 @@ export const GithubProvider = ({children}) => {
 
         return <GithubContext.Provider value={{
 
-        users,
-        loading,
+        users: state.users,
+        loading: state.loading,
         getAllUsers,
 
     }}>
@@ -45,3 +49,9 @@ export const GithubProvider = ({children}) => {
 }
 
 export default GithubContext
+
+/**
+ *   headers: {
+                    Authorization: `token ${GITHUB_TOKEN}`
+                }
+ */
