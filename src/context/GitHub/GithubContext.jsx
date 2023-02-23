@@ -13,7 +13,7 @@ export const GithubProvider = ({children}) => {
   
     const initialState = {
         users: [], 
-        loading: true
+        loading: false
     }
 
     const [state, dispatch] = useReducer(githubReducer, initialState)
@@ -22,6 +22,11 @@ export const GithubProvider = ({children}) => {
    
 
     const getAllUsers = async() => {
+
+        setLoading()
+
+        
+        
         try {
             const response = await fetch(`${GITHUB_uRL}/users`)
 
@@ -36,6 +41,15 @@ export const GithubProvider = ({children}) => {
             console.log(error)
         }
     }
+
+    // SET LOADING FUNC
+    
+    const setLoading = () => dispatch({type: "SET_LOADING"})
+
+
+    
+
+
 
         return <GithubContext.Provider value={{
 
