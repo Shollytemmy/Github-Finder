@@ -1,13 +1,13 @@
-import { createContext, useEffect, useState } from "react";
+import { createContext, useState } from "react";
 
 const GITHUB_uRL = import.meta.env.VITE_GITHUB_URL
 const GITHUB_TOKEN = import.meta.env.VITE_GITHUB_TOKEN
 
 
-const GithubContetext = createContext()
+const GithubContext = createContext()
 
 
-export const GithubProvider = (children) => {
+export const GithubProvider = ({children}) => {
 
     const [users, setUsers] = useState([])
     const [loading, setLoading] = useState(true)
@@ -33,19 +33,15 @@ export const GithubProvider = (children) => {
         }
     }
 
-
-
-
-
-
-    return <GithubContetext.Provider value={{
+        return <GithubContext.Provider value={{
 
         users,
-        loading
+        loading,
+        getAllUsers,
 
     }}>
         {children}
-    </GithubContetext.Provider>
+    </GithubContext.Provider>
 }
 
-export default GithubContetext
+export default GithubContext

@@ -1,13 +1,15 @@
-import { data } from 'autoprefixer'
-import React, { useEffect, useState } from 'react'
+
+import React, { useEffect, useState, useContext } from 'react'
+import GithubContext from '../../context/GitHub/GithubContext'
 import Spinner from '../Spinner'
 import UserItem from './UserItem'
 
 
 function UserResults() {
-  const [users, setUsers] = useState([])
-  const [loading, setLoading] = useState(true)
+  
   const [hasError, setError] = useState(null)
+  const {users, loading, getAllUsers} = useContext(GithubContext)
+
 
    
 
@@ -19,29 +21,7 @@ function UserResults() {
     }, [])
 
 
-    const getAllUsers = async() => {
-      
-      try {
-        const response = await fetch(`${import.meta.env.VITE_GITHUB_URL}/users`,{
-            headers:{
-                Authorization: `token ${import.meta.env.VITE_GITHUB_TOKEN}`
-
-            }
-        })
-        const data = await response.json()
-        if(response.status === 200){
-          setLoading(false)
-          setUsers(data)
-          
-        }
-        
-        
-      } catch (error) {
-        
-        console.log(error)
-        
-      }
-    }
+    
         
     if(!loading){
 
