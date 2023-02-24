@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import {BrowserRouter as Router, Routes, Route} from 'react-router-dom'
+import {Alert} from './components/Layouts/Alert'
 import Footer from './components/Layouts/Footer'
 import Navbar from './components/Layouts/Navbar'
 import NotFound from './components/Layouts/NotFound'
@@ -19,6 +20,7 @@ function App() {
       <div className="flex flex-col justify-between h-screen">
         <Navbar />
         <main>
+          <Alert />
           <div className="container px-3 pb-12 mx-auto">
             <Routes>
               <Route path='/' element={<Home />} />

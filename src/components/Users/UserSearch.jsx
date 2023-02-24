@@ -8,6 +8,8 @@ function UserSearch() {
     const {users, searchUsers, clear} = useContext(GithubContext)
     const {setAlert} = useContext(AlertContext)
 
+   
+
     const handleChange = (e) => {
         setQuery(e.target.value)
 
@@ -17,7 +19,7 @@ function UserSearch() {
         e.preventDefault()
 
         if(query === ""){
-            setAlert("Pease type something ", "error")
+            setAlert("Please type something ", "error")
         } else{
 
             searchUsers(query)
