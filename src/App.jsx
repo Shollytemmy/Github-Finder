@@ -8,6 +8,7 @@ import { AlertProvider } from './context/Alert/AlertContext'
 import { GithubProvider } from './context/GitHub/GithubContext'
 import About from './Pages/About'
 import Home from './Pages/Home'
+import SingleUser from './Pages/SingleUser'
 
 
 function App() {
@@ -26,6 +27,7 @@ function App() {
               <Route path='/' element={<Home />} />
               <Route path='about' element={<About />} />
               <Route path='*' element={<NotFound />} />
+              <Route path='user/:login' element={<SingleUser />}/>
             </Routes>
           </div>
         </main>

@@ -1,4 +1,4 @@
-import { createContext, useReducer, useState } from "react";
+import { createContext, useReducer } from "react";
 import githubReducer from "./githubReducer";
 
 const GITHUB_uRL = import.meta.env.VITE_GITHUB_URL
@@ -13,6 +13,8 @@ export const GithubProvider = ({children}) => {
   
     const initialState = {
         users: [], 
+        user: {},
+        repos: [],
         loading: false
     }
 
@@ -46,6 +48,45 @@ const params =  new URLSearchParams({
         }
     }
 
+
+    const fetchSingleUser = async(login) => {
+       try {
+         const response = await fetch(`${GITHUB_uRL}/users/${login}`)
+         const data = await response.json()
+        //  console.log(data)
+         if(response.status === 200){
+            dispatch({
+                type: "FETCH_SINGLE_USER",
+                payload: data
+            })
+         }
+        
+       } catch (error) {
+        
+       }
+    }
+
+
+    const getRepos = async(login) => {
+
+        const params = new URLSearchParams({
+            sort: "created",
+            per_page: 10
+        })
+
+        setLoading()
+        const response = await fetch(`${GITHUB_uRL}/users/${login}/repos?${params}`)
+
+        const data = await response.json()
+
+        dispatch({
+            type: "GET_REPOS",
+            payload: data
+        })
+
+    
+    }
+
     // SET LOADING FUNC
     
     const setLoading = () => dispatch({type: "SET_LOADING"})
@@ -66,6 +107,11 @@ const params =  new URLSearchParams({
         users: state.users,
         loading: state.loading,
         searchUsers,
+        fetchSingleUser,
+        getRepos,
+        user: state.user,
+        repos: state.repos,
+
         clear
 
     }}>
